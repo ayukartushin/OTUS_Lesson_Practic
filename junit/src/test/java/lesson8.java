@@ -46,17 +46,7 @@ public class lesson8 {
         Alert alert = driver.switchTo().alert();
         String actual = alert.getText();
         logger.info(alert.getText());
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         alert.accept();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         Assert.assertEquals("Test Alert", actual);
     }
 
@@ -68,17 +58,9 @@ public class lesson8 {
         logger.info("Появился confirm");
         Alert alert = driver.switchTo().alert();
         logger.info(alert.getText());
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         alert.accept();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         wait.until(ExpectedConditions.alertIsPresent());
         logger.info("Появился alert");
         alert = driver.switchTo().alert();
@@ -176,12 +158,29 @@ public class lesson8 {
         driver.get("http://subdomain.localhost/iframe.html");
         WebElement frame = driver.findElement(By.tagName("iframe"));
         driver.switchTo().frame(frame);
+        driver.switchTo().defaultContent();
         logger.info("Переходим в iframe");
         String actual = driver.findElement(By.tagName("H1")).getText();
         Assert.assertEquals("Wee", actual);
     }
 
     @Test
+    public void Iframe2() {
+        driver.get("http://subdomain.localhost/iframe2.html");
+        WebElement frame = driver.findElement(By.tagName("iframe"));
+        driver.switchTo().frame(frame);
+        logger.info(driver.findElement(By.tagName("H1")).getText());
+        driver.switchTo().frame(driver.findElement(By.tagName("iframe")));
+        logger.info(driver.findElement(By.tagName("H1")).getText());
+        driver.switchTo().defaultContent();
+        logger.info(driver.findElement(By.tagName("H1")).getText());
+
+        logger.info("Переходим в iframe");
+        String actual = driver.findElement(By.tagName("H1")).getText();
+        Assert.assertEquals("Wee", actual);
+    }
+
+        @Test
     public void Auth(){
         driver.get("http://admin:123456@subdomain.localhost/auth/index.html");
         try {
